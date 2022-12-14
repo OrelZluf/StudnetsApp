@@ -1,37 +1,67 @@
 package com.example.students;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
+
+import com.example.students.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView studentsListRV;
+    StudentsListFragment frag1;
+    BlueFragment frag2;
+    BlueFragment frag3;
+    StudentsListFragment frag4;
+    Fragment inDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<Student> studentsList = new ArrayList<>();
-        // add simulation data
-        studentsList.add(new Student("123456",
-                "Orel",
-                "bla", "0505255441", "Beit arif", true));
-        studentsList.add(new Student("123",
-                "Dor",
-                "bla","0505255441", "Beit arif", true));
-        studentsList.add(new Student("1257",
-                "Miki",
-                "bla","0505255441", "Beit arif", true));
+        frag1 = new StudentsListFragment();
+//        frag2 = BlueFragment.newInstance("2");
+//        frag3 = BlueFragment.newInstance("3");
+//        frag4 = new StudentsListFragment();
+//
+//        Button btn1 = findViewById(R.id.main_btn_1);
+//        Button btn2 = findViewById(R.id.main_btn_2);
+//        Button btn3 = findViewById(R.id.main_btn_3);
+//        Button btn4 = findViewById(R.id.main_btn_4);
+//
+//        btn1.setOnClickListener((view)->{
+//            displayFragment(frag1);
+//        });
+//        btn2.setOnClickListener((view)->{
+//            displayFragment(frag2);
+//        });
+//        btn3.setOnClickListener((view)->{
+//            displayFragment(frag3);
+//        });
+//        btn4.setOnClickListener((view)->{
+//            displayFragment(frag4);
+//        });
+        displayFragment(frag1);
+    }
 
-        studentsListRV
-                = (RecyclerView)findViewById(
-                R.id.recyclerView);
+    private void displayFragment(Fragment frag) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction tran = manager.beginTransaction();
 
+        tran.remove(frag);
+        tran.add(R.id.main_frag_container, frag);
+
+        if (inDisplay != null) tran.remove(inDisplay);
+        tran.addToBackStack("TAG");
+        tran.commit();
+        inDisplay = frag;
     }
 }
