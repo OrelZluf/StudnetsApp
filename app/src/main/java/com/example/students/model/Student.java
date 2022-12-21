@@ -8,13 +8,13 @@ public class Student {
     public String address;
     public boolean checkStatus;
 
-    public Student(String id, String name, String avatarUrl, String phoneNumber, String address, boolean checkStatus){
+    public Student(String id, String name, String phoneNumber, String address, boolean checkStatus){
         this.id = id;
         this.name = name;
-        this.avatarUrl = avatarUrl;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.checkStatus = checkStatus;
+        this.avatarUrl = "";
     }
 
 }

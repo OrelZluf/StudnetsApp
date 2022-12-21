@@ -17,15 +17,20 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     StudentsListFragment frag1;
-    BlueFragment frag2;
-    BlueFragment frag3;
+//    BlueFragment frag2;
+//    BlueFragment frag3;
     StudentsListFragment frag4;
     Fragment inDisplay;
+    FragmentManager manager;
+    FragmentTransaction tran;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        manager = getSupportFragmentManager();
+        tran = manager.beginTransaction();
 
         frag1 = new StudentsListFragment();
 //        frag2 = BlueFragment.newInstance("2");
@@ -52,10 +57,11 @@ public class MainActivity extends AppCompatActivity {
         displayFragment(frag1);
     }
 
-    private void displayFragment(Fragment frag) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
+    public void addFrag(int fragId, Fragment frag){
+        tran.add(fragId, frag);
+    }
 
+    private void displayFragment(Fragment frag) {
         tran.remove(frag);
         tran.add(R.id.main_frag_container, frag);
 
