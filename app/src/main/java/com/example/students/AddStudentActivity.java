@@ -18,7 +18,6 @@ public class AddStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
-
         Button saveBtn = findViewById(R.id.addstudent_save_btn);
         Button cancelBtn = findViewById(R.id.addstudent_cancell_btn);
 
