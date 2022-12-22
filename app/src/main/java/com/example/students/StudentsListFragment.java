@@ -1,8 +1,11 @@
 package com.example.students;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ import java.util.List;
 public class StudentsListFragment extends Fragment {
     List<Student> data;
     RecyclerView list;
+    StudentRecyclerAdapter adapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
@@ -41,12 +45,33 @@ public class StudentsListFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_students_list, container, false);
-        data = Model.instance().getAllStudents();
         list = view.findViewById(R.id.studentlistfrag_list);
-        list.setHasFixedSize(true);
 
+
+//        adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
+//        list.setAdapter(adapter);
+
+//        adapter.setOnItemClickListener(new StudentRecyclerAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int pos) {
+//                Log.d("TAG", "Row was clicked " + pos);
+//
+////                Intent intent = new Intent(getContext(), DetailsActivity.class);
+////                startActivity(intent);
+//            }
+//        });
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        data = Model.instance().getAllStudents();
+
+        list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        StudentRecyclerAdapter adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
+
+        adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new StudentRecyclerAdapter.OnItemClickListener() {
@@ -55,19 +80,25 @@ public class StudentsListFragment extends Fragment {
                 Log.d("TAG", "Row was clicked " + pos);
 
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
+                Bundle params = new Bundle();
+
+                params.putInt("pos", pos);
+                intent.putExtras(params);
+
                 startActivity(intent);
             }
         });
 
-        return view;
+        super.onStart();
     }
 
-    @Override
-    public void onResume() {
-        data = Model.instance().getAllStudents();
+    //    @Override
+//    public void onResume() {
+    //      data = Model.instance().getAllStudents();
+//
+//        adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
+//        list.setAdapter(adapter);
+//        super.onResume();
+//    }
 
-        StudentRecyclerAdapter adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
-        list.setAdapter(adapter);
-        super.onResume();
-    }
 }

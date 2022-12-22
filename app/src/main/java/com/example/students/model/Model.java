@@ -23,4 +23,12 @@ public class Model {
     public void addStudent(Student st){
         data.add(st);
     }
+
+    public void deleteStudent(int position){
+        data.remove(position);
+    }
+
+    public void editStudent(int position, Student st){
+        data.set(position, st);
+    }
 }
